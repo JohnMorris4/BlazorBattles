@@ -26,6 +26,12 @@ app {
     align-items: center;
 }
 
+.top-menu {
+    justify-content: center;
+    width: 100%;
+    display: flex;
+}
+
 .main {
     flex: 1;
 }
@@ -45,6 +51,7 @@ app {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 
 .sidebar {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
@@ -96,6 +103,8 @@ app {
                 background-color: rgba(255,255,255,0.1);
                 color: white;
             }
+            
+            
 
 .content {
     padding-top: 1.1rem;
@@ -117,6 +126,12 @@ app {
     color: red;
 }
 
+
+.army-list {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -136,9 +151,11 @@ app {
     top: 0.5rem;
 }
 
+
+
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {
-        display: none;
+        /*display: none;*/
     }
 
     .main .top-row.auth {
