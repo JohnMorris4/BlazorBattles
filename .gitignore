@@ -11,6 +11,10 @@ autom4te.cache/
 tarballs/
 test-results/
 
+
+# Remove secret stuff from view
+Shared/User.cs
+
 # Mac bundle stuff
 *.dmg
 *.app

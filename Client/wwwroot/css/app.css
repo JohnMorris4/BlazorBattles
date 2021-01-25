@@ -122,8 +122,10 @@ app {
     outline: 1px solid red;
 }
 
+
 .validation-message {
     color: red;
+    list-style: none;
 }
 
 

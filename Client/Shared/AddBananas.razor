@@ -3,8 +3,10 @@
 <button @onclick="IncreaseBananasCount" class="btn btn-primary">+</button>
 
 @code {
+
     public void IncreaseBananasCount()
     {
         BananaService.AddBananas(10);
     }
+
 }

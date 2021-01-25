@@ -2,6 +2,7 @@
 @inject IBananaService BananaService
 @inject IUnitService UnitService
 @inject IToastService ToastService
+@attribute [Authorize]
 
 <h3>Build</h3>
 <div class="form-group">
@@ -14,7 +15,6 @@
 </div>
 
 
-
 <button class="btn btn-outline-info" @onclick="BuildUnit">Build</button>
 
 @if (needMoreBananas)
@@ -23,13 +23,14 @@
         Not Enough Bananas!
     </div>
 }
+
 @code {
     int selectedUnitId = 1;
-    bool needMoreBananas = false;
+    bool needMoreBananas;
 
     public void BuildUnit()
     {
-        Unit selectedUnit =
+        var selectedUnit =
             UnitService.Units.FirstOrDefault(unit => unit.Id == selectedUnitId);
         if (BananaService.Bananas < selectedUnit.BananaCost)
         {
@@ -42,4 +43,10 @@
         BananaService.EatBananas(selectedUnit.BananaCost);
         UnitService.AddUnits(selectedUnitId);
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UnitService.LoadUnitsAsync();
+    }
+
 }

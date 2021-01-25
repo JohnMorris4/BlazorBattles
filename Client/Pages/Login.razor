@@ -1,0 +1,32 @@
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
+
+
+    Please Login below or <NavLink href="register">Register</NavLink> for a new account
+    <EditForm Model="@user" OnSubmit="HandleLogin">
+        <DataAnnotationsValidator/>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <InputText id="username" @bind-Value="user.UserName" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText id="password" type="password" @bind-Value="user.Password" class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary">Login</button>
+        <ValidationSummary/>
+    </EditForm>
+
+@code {
+    private UserLogin user = new UserLogin();
+    
+
+    private async void HandleLogin()
+    {
+        await LocalStorage.SetItemAsync<bool>("isAuthenticated", true);
+        await AuthStateProvider.GetAuthenticationStateAsync();
+    }
+
+}

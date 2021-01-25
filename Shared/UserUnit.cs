@@ -5,6 +5,5 @@ namespace BlazorBattles.Shared
         public int UserId { get; set; }
         public int UnitId { get; set; }
         public int HitPoints { get; set; }
-        
     }
 }

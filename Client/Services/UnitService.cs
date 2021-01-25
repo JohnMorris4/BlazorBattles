@@ -1,6 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 using BlazorBattles.Shared;
 using Blazored.Toast.Services;
 
@@ -9,31 +11,31 @@ namespace BlazorBattles.Client.Services
     public class UnitService : IUnitService
     {
         private readonly IToastService _toastService;
+        private readonly HttpClient _httpClient;
 
-        public UnitService(IToastService toastService)
+        public UnitService(IToastService toastService, HttpClient httpClient)
         {
             _toastService = toastService;
+            _httpClient = httpClient;
         }
-        public IList<Unit> Units { get; } = new List<Unit>
-        {
-            new Unit {Id = 1, Title = "Knight", Attack = 10, Defense = 10, BananaCost = 100 },
-            new Unit {Id = 2, Title = "Archer", Attack = 15, Defense = 5, BananaCost = 150 },
-            new Unit {Id = 3, Title = "Mage", Attack = 20, Defense = 1, BananaCost = 200}
 
-        };
+        public IList<Unit> Units { get; set; } = new List<Unit>(); 
 
         public IList<UserUnit> MyUnits { get; set; } = new List<UserUnit>();
+
         public void AddUnits(int unitId)
         {
-            Unit unit = Units.First(unit => unit.Id == unitId);
-            MyUnits.Add(new UserUnit
-            {
-                UnitId = unit.Id,
-                HitPoints = unit.HitPoints
-            });
+            var unit = Units.First(unit => unit.Id == unitId);
+            MyUnits.Add(new UserUnit {UnitId = unit.Id, HitPoints = unit.HitPoints});
             _toastService.ShowSuccess($"The {unit.Title} was created", "Unit Built ;)");
-            // Console.WriteLine($"{unit.Title} was built" );
-            // Console.WriteLine($"Your Army size is {MyUnits.Count}");
+        }
+
+        public async Task LoadUnitsAsync()
+        {
+            if (Units.Count == 0)
+            {
+                Units = await _httpClient.GetFromJsonAsync<IList<Unit>>("api/unit");
+            }
         }
     }
 }
